@@ -72,3 +72,6 @@ if ($tagInfo -match '^(.+)-(\d+)-g[0-9a-f]+$') {
 } else {
     Write-Host "No changes"
 }
+
+Set-Location /
+Remove-Item $destination_dir -Recurse -Force -ErrorAction SilentlyContinue
