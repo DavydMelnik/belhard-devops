@@ -60,6 +60,7 @@ if ($tagInfo -match '^(.+)-(\d+)-g[0-9a-f]+$') {
                 }
             } catch {
                 Write-Error "ERROR: $_"
+                }
         } else {
             Write-Error "Invalid tag format: $lastTag"
         }
@@ -70,5 +71,4 @@ if ($tagInfo -match '^(.+)-(\d+)-g[0-9a-f]+$') {
 
 } else {
     Write-Host "No changes"
-}
 }
