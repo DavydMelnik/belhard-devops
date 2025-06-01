@@ -5,7 +5,7 @@ $repositoryUrl = "git@github.com:DavydMelnik/belhard-devops.git"
 
 # --- Function Definitions ---
 #Ensures directory exists or creates it
-function Ensure-Dir {
+function Initialize-RepositoryFolder {
     param (
         [Parameter(Mandatory=$true)]
         [string]$DirPath
@@ -97,7 +97,7 @@ function Remove-LocalDirectory {
 } 
 
 # --- Main execution ---
-Ensure-Dir -DirPath $destinationDirectory
+Initialize-RepositoryFolder -DirPath $destinationDirectory
 Invoke-GitRepositoryClone -RepositoryUrl $repositoryUrl -TargetDirectory $destinationDirectory
 Update-TagPatch -RepositoryPath $destinationDirectory
 Remove-LocalDirectory -RepositoryPath $destinationDirectory
