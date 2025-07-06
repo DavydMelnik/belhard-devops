@@ -1,0 +1,36 @@
+---
+- name: Установка пакетов и создание пользователей
+  hosts: servers
+  become: yes
+
+  tasks:
+
+    - name: Установка системных пакетов
+      package:
+        name: "{{ packages }}"
+        state: present
+
+    - name: Создание системного пользователя
+      user:
+        name: "{{ user_to_create }}"
+        state: present
+        shell: /bin/bash
+        create_home: yes
+        groups: sudo
+        append: yes
+
+    - name: Разрешить sudo без пароля
+      copy:
+        dest: "/etc/sudoers.d/{{ user_to_create }}"
+        content: "{{ user_to_create }} ALL=(ALL) NOPASSWD: ALL"
+        mode: '0440'
+
+    - name: Выполнить команду whoami
+      shell: whoami
+      register: whoami_result
+      become: yes
+      become_user: "{{ user_to_create }}"
+
+    - name: Вывод результата whoami
+      debug:
+        var: whoami_result.stdout
